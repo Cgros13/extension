@@ -2,10 +2,9 @@ console.log('je suis dans bck')
 
 
 chrome.tabs.query({currentWindow: true}, function(tabs) {
-  console.log(tabs)
   tabs.forEach(tab => {
-    let new_url = tab.url.replace(/^https?:\/\//, '')
-    fetch(`https://api.websitecarbon.com/site?url=https%3A%2F%2F${new_url}%2F`,
+    let new_url = tab.url.replace(':', '%3A').replaceAll('/', '%2F')
+    fetch(`https://api.websitecarbon.com/site?url=${new_url}`,
     {
       method: 'GET',
       headers: {
@@ -15,9 +14,10 @@ chrome.tabs.query({currentWindow: true}, function(tabs) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
-      // chrome.tabs.sendMessage(tab.id, {type: "carbon", value: data})
+      console.log(data.url)
+      console.log(data.cleanerThan)
+      const stat = `<li>${data.cleanerThan}</li>`
+      document.querySelector('ul').insertAdjacentHTML('beforeend', stat);
     })
-
   });
 });
