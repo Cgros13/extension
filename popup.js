@@ -18,8 +18,9 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.msg === "created_visit") {
       console.log("created visit")
+      console.log(request)
+      document.getElementById("response").innerHTML = request.cleanerThan
 
-      console.log(request.message)
       // let ret = JSON.parse(request)
       // console.log(ret)
     }

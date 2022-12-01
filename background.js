@@ -1,49 +1,60 @@
 
-
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
-  if (ChangeInfo.status === 'complete') {
-
-
-    chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
-      if (cookie) {
-        visit_url = tab.url
-
-
-        fetch(`http://localhost:3000/api/v1/visits`,
-        {
-          method: 'POST',
-          headers: {
-            'X-User-Token': cookie.value,
-            'Content-Type': 'application/json'
-            },
-          body: JSON.stringify({
-            url: tab.url
-            })
-        })
-
-
-        // .then(response => {
-        //   console.log(response)
-        //   response.json()
-        // })
-        .then(data => {
-          if (data.status === 'done') {
-            console.log("done")
-
-            chrome.runtime.sendMessage({
-              msg: "created_visit",
-              content: {
-                subject: "success",
-                content: data["message"]
-              }
-            })
-          }
-          //erreurs eventuelles
-        })
-      }
-    })
+  if (tab.url?.startsWith("chrome://")) {
+    return undefined;
+  } else {
+    console.log('je suis dans le else')
+    if (ChangeInfo.status === 'complete') {
+      console.log('je suis dans le complet if')
+      sendVisitToRails(tab.url)
+    }
   }
 });
+
+const sendVisitToRails = (url) => {
+  // We retrieve the user token from the storage.
+  chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
+    if (cookie) {
+      console.log(cookie);
+      console.log(cookie.value);
+      fetch('http://localhost:3000/api/v1/visits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-User-Token': cookie.value,
+        },
+        body: JSON.stringify({
+          visit: {
+            url: url,
+          }
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          chrome.runtime.sendMessage({
+            message: "created_visit",
+            cleanerThan: data.cleaner_than,
+            url: url
+          });
+        })
+    }})
+  }
+
+
+// const messageFunctionMapper = {
+//   fetch: sendVisitToRails,
+// }
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     if (request.msg in messageFunctionMapper) {
+//       console.log(request)
+//       messageFunctionMapper[request.msg](request, sender, sendResponse)
+//     }
+//   }
+// );
+
 
 
 // // chrome.tabs.query({currentWindow: true}, function(tabs) {

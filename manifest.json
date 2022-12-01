@@ -4,26 +4,22 @@
   "description": "Know your Co2 footprint",
   "manifest_version": 3,
   "version_name": "0.0.0.1",
-  "host_permissions": ["https://api.websitecarbon.com/*", "http://localhost:3000/*"],
-  "icons": {
-    "48": "assets/icon48.png"
+  "background": {
+    "service_worker": "background.js"
   },
   "action": {
     "default_icon": {
       "48": "assets/icon48.png"
     },
-
-    "default_popup": "popup.html",
-    "default_title": "Co2"
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["popup.js"]
+      "js": ["popup.js", "content.js"]
     }
   ],
-  "permissions": ["storage", "tabs", "activeTab", "cookies"],
-  "background": {
-    "service_worker": "background.js"
-  }
+  "host_permissions": ["https://api.websitecarbon.com/*", "http://localhost:3000/*", "*://*/*"],
+
+  "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"]
 }
