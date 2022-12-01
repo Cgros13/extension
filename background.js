@@ -1,16 +1,9 @@
-// // console.log('je suis dans bck')
 
-
-// Every time we open a tab
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
   if (ChangeInfo.status === 'complete') {
-  // We check if we have the user_id in the local storage
     chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
-      // console.log(cookie)
       if (cookie) {
-        // we want to fetch rails with the user_id
         visit_url = tab.url
-        console.log(visit_url)
         fetch(`http://localhost:3000/api/v1/visits`,
         {
           method: 'POST',
