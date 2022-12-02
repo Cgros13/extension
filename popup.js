@@ -72,7 +72,7 @@ setTimeout(function(){
     let bar = circle.querySelectorAll('.c-progress-circle__bar')[0];
 
     if (val < 50) {
-      bar.style.stroke = "#6A040F"
+      // bar.style.stroke = "#6A040F"
       //emoji bad
       let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
       emoji.src = badEmojis[randomIndexBad];
