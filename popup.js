@@ -8,8 +8,7 @@ const retrieveVisitsRails = (url, cookie) => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
-      const stat = `<li>${data.cleanerThan}</li>`
+      const stat = `<li>${data[0].cleaner_than}</li>`
       document.querySelector('ul').insertAdjacentHTML('beforeend', stat);
       // we want to store in local storage the visit id and the url
       // chrome.storage.sync.set({results: [}, function() {
