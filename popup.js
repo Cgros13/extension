@@ -8,8 +8,17 @@ const retrieveVisitsRails = (url, cookie) => {
     })
     .then(response => response.json())
     .then(data => {
-      const stat = `<li>${data[0].cleaner_than}</li>`
-      document.querySelector('ul').insertAdjacentHTML('beforeend', stat);
+      const percentage = parseInt((data[0].cleaner_than * 100));
+      const stat = `<span>${(parseInt((data[0].cleaner_than * 100)))}%</span>`
+      if (percentage > 50) {
+        document.getElementById('response').insertAdjacentHTML('beforeend', `Cleaner than ${stat} of webpages`);
+        document.getElementById('circle').dataset.percentage = percentage;
+      }
+      else {
+        stat2 = `<span>${100 - percentage} %</span>`
+        document.getElementById('response').insertAdjacentHTML('beforeend', `Dirtier than ${stat2} of webpages`);
+        document.getElementById('circle').dataset.percentage = percentage;
+      }
       // we want to store in local storage the visit id and the url
       // chrome.storage.sync.set({results: [}, function() {
       //   console.log('Value is set to ' + data);
@@ -111,7 +120,7 @@ setTimeout(function(){
     let bar = circle.querySelectorAll('.c-progress-circle__bar')[0];
 
     if (val < 50) {
-      // bar.style.stroke = "#6A040F"
+      bar.style.stroke = "#6A040F"
       //emoji bad
       let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
       emoji.src = badEmojis[randomIndexBad];
@@ -144,4 +153,3 @@ setTimeout(function(){
     }
   }
 }, 500);
-
