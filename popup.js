@@ -16,13 +16,11 @@ console.log("cookies are enabled")
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.msg === "created_visit") {
+    if (request.message === "created_visit") {
       console.log("created visit")
       console.log(request)
-      document.getElementById("response").innerHTML = request.cleanerThan
-
-      // let ret = JSON.parse(request)
-      // console.log(ret)
+      const stat = `<li>${request.cleanerThan}</li>`
+      document.querySelector('ul').insertAdjacentHTML('beforeend', stat);
     }
   }
 );
