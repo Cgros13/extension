@@ -1,5 +1,6 @@
 // // console.log('je suis dans bck')
 
+// Need to uncomment to do API requests
 
 // Every time we open a tab
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
