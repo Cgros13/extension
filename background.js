@@ -32,11 +32,16 @@ const sendVisitToRails = (url) => {
         .then(response => response.json())
         .then(data => {
           console.log(data)
-          chrome.runtime.sendMessage({
-            message: "created_visit",
-            cleanerThan: data.cleaner_than,
-            url: url
-          });
+          // we want to store in local storage the visit id and the url
+          // chrome.storage.sync.set({results: [}, function() {
+          //   console.log('Value is set to ' + data);
+          // });
+          // chrome.runtime.sendMessage({
+          //   message: "created_visit",
+          //   cleanerThan: data.cleaner_than,
+          //   url: url
+
+          // });
         })
     }})
   }
