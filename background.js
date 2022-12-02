@@ -1,4 +1,3 @@
-
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
   if (tab.url?.startsWith("chrome://")) {
     return undefined;
@@ -45,6 +44,7 @@ const sendVisitToRails = (url) => {
         })
     }})
   }
+
 
 
 // const messageFunctionMapper = {
