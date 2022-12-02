@@ -1,4 +1,5 @@
 
+// When we open a new tab
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
   if (tab.url?.startsWith("chrome://")) {
     return undefined;
@@ -10,6 +11,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
     }
   }
 });
+
+// When the user opens a new tab we modify the dom to display the cleaner than stat
+// chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
 
 const sendVisitToRails = (url) => {
   // We retrieve the user token from the storage.
