@@ -1,25 +1,34 @@
 {
-  "name": "Co_de",
-  "version": "0.1.0",
-  "description": "Know your Co2 footprint",
+  "name": "c0_de",
+  "description": "We are not bar codes",
+
+  "version": "0.0.1",
+  "version_name": "beta",
+
   "manifest_version": 3,
-  "version_name": "0.0.0.1",
+
   "background": {
     "service_worker": "background.js"
   },
+
   "action": {
-    "default_icon": {
-      "48": "assets/icon48.png"
-    },
-    "default_popup": "popup.html"
+    "default_icon": "assets/icon48.png",
+    "default_popup": "popup.html",
+    "default_title": "Co2"
   },
+
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["popup.js", "content.js"]
     }
   ],
+
   "host_permissions": ["https://api.websitecarbon.com/*", "http://localhost:3000/*", "*://*/*"],
 
-  "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"]
+  "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"],
+
+  "chrome_url_overrides" : {
+    "newtab" : "index.html"
+  }
 }
