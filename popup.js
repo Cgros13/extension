@@ -1,4 +1,3 @@
-// document.getElementById('loading').style.display = 'block';
 logIn();
 displayEmoji();
 
@@ -12,37 +11,32 @@ const retrieveVisitsRails = (url, cookie) => {
     })
     .then(response => response.json())
     .then(data => {
+      let last = 0
       if (data.length > 0) {
-        var last = data.length - 1
-      } else {
-        var last = 0
+        last = data.length - 1
       }
-      console.log(data[last])
 
       const percentage = parseInt((data[last].cleaner_than * 100));
+
       const stat = `<span>${(percentage)}%</span>`
-      console.log(percentage);
+      const stat2 = `<span>${100 - percentage} %</span>`
+
 
       if (percentage > 50) {
         document.getElementById('loading').style.display = 'none';
 
-        document.getElementById('response').insertAdjacentHTML('beforeend', `Cleaner than ${stat} of webpages`); // FR
+        document.getElementById('response').innerHTML = `Cleaner than ${stat} of webpages`;
         document.getElementById('circle').dataset.percentage = percentage;
       }
       else {
         document.getElementById('loading').style.display = 'none';
 
-        const stat2 = `<span>${100 - percentage} %</span>`
-        document.getElementById('response').insertAdjacentHTML('beforeend', `Dirtier than ${stat2} of webpages`); // FR
+        document.getElementById('response').innerHTML = `Dirtier than ${stat2} of webpages`;
         document.getElementById('circle').dataset.percentage = percentage;
       }
       displayEmoji();
     })
   }
-// Declare an array object for array of images
-// Push the URLs to the array of images
-let perfectEmojis = [];
-perfectEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/partying-face_1f973.png');
 
 let goodEmojis = [];
 goodEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/star-struck_1f929.png');
@@ -62,8 +56,8 @@ badEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumb
 
 let loading = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/hourglass-not-done_23f3.png";
 
+let perfect = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/partying-face_1f973.png';
 
-// Popup emoji code
 let progressCircles = document.querySelectorAll('.c-progress-circle');
 let emoji = document.querySelector('#emoji');
 
@@ -76,26 +70,22 @@ function displayEmoji() {
 
       if (val === 0) {
         emoji.src = loading;
-      } else if (val < 30) {
+
+      } else if (val < 30) { // bad
         bar.style.stroke = "#d00000"
-        //emoji bad
         let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
         emoji.src = badEmojis[randomIndexBad];
-      } else if (val < 60) {
-        //emoji moyen
+      } else if (val < 60) { // moyen
         bar.style.stroke = "#e3d400"
         let randomIndexOk = Math.floor(Math.random() * okEmojis.length);
         emoji.src = okEmojis[randomIndexOk];
-      } else if (val < 90) {
-        //emoji bon
+      } else if (val < 90) { // bon
         bar.style.stroke = "#31c200"
         let randomIndexGood = Math.floor(Math.random() * goodEmojis.length);
         emoji.src = goodEmojis[randomIndexGood];
-      } else {
-        // emoji perfect
+      } else { // perfect
         bar.style.stroke = "#00ffee"
-        let randomIndexGood = Math.floor(Math.random() * goodEmojis.length);
-        emoji.src = perfectEmojis[randomIndexGood];
+        emoji.src = perfect;
       }
 
       if (isNaN(val)) {
@@ -127,13 +117,12 @@ function logIn() {
   if (chrome.cookies) {
     chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
       if (cookie) {
-        // we want to retrieve the url of the current tab
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('loading').style.display = 'block';
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           let url = tabs[0].url;
           retrieveVisitsRails(url, cookie.value);
         });
-      } else {
-        console.log('no cookie') // HTML sign in to rails app here
       }
     })
   }
