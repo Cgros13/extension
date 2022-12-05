@@ -2,9 +2,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
   if (tab.url?.startsWith("chrome://")) {
     return undefined;
   } else {
-    console.log('je suis dans le else')
     if (ChangeInfo.status === 'complete') {
-      console.log('je suis dans le complet if')
       sendVisitToRails(tab.url)
     }
   }
@@ -14,8 +12,6 @@ const sendVisitToRails = (url) => {
   // We retrieve the user token from the storage.
   chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
     if (cookie) {
-      console.log(cookie);
-      console.log(cookie.value);
       fetch('http://localhost:3000/api/v1/visits', {
         method: 'POST',
         headers: {
@@ -31,6 +27,8 @@ const sendVisitToRails = (url) => {
         .then(response => response.json())
         .then(data => {
           console.log(data)
+          chrome.runtime.sendMessage({message: "update", data: data});
+          
 
         })
     }})
