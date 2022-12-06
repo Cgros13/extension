@@ -69,8 +69,7 @@ function displayEmoji() {
       let bar = circle.querySelectorAll('.c-progress-circle__bar')[0];
 
       if (val === 0) {
-        emoji.src = loading;
-
+         emoji.src = loading;
       } else if (val < 30) { // bad
         bar.style.stroke = "#d00000"
         let randomIndexBad = Math.floor(Math.random() * badEmojis.length);

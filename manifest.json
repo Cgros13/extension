@@ -28,6 +28,7 @@
 
   "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"],
 
+
   "chrome_url_overrides" : {
     "newtab" : "index.html"
   }
