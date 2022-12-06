@@ -5,15 +5,33 @@
   </head>
   <body>
     <div class="container" id="demo">
-      <div class="c-progress-circle" id="circle" data-percentage="0">
-        <img id="emoji" alt="emoji">
-        <svg class="c-progress-circle__svg">
-          <circle class="c-progress-circle__bar" r="20" cx="50%" cy="50%" stroke="#31572C"></circle>
-        </svg>
+      <div class="response-popup-api">
+        <div class="c-progress-circle" id="circle" data-percentage="0">
+          <img id="emoji" alt="emoji">
+          <svg class="c-progress-circle__svg">
+            <circle class="c-progress-circle__bar" r="20" cx="50%" cy="50%" stroke="#31572C"></circle>
+          </svg>
+        </div>
+        <div class="popup-text" id="response">
+          <div class="notlogged" id="login">
+            <h3>Sorry, you need to log in first</h3>
+            <a href="http://localhost:3000/users/sign_in" target="_blank" class="login-btn">Log in</a>
+          </div>
+        </div>
       </div>
-      <div class="popup-text" id="response">
-        <a href="http://localhost:3000/users/sign_in" target="_blank" id="login">Login</a>
-        <p id="loading" >We calculate Carbon Data ...</p>
+
+      <div class="loading-content" id="loading">
+        <div class="loading-animation">
+          <div class="load-9">
+            <div class="spinner">
+              <div class="bubble-1"></div>
+              <div class="bubble-2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="loading-text">
+          <h3>Calculating Carbon footprint ...</h3>
+        </div>
       </div>
     </div>
   </body>
