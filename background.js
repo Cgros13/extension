@@ -26,10 +26,7 @@ const sendVisitToRails = (url) => {
         })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           chrome.runtime.sendMessage({message: "update", data: data});
-          
-
         })
     }})
   }
