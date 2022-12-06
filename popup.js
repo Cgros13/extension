@@ -2,6 +2,7 @@ logIn();
 displayEmoji();
 
 const retrieveVisitsRails = (url, cookie) => {
+  console.log("retrieveVisitsRails", url);
   fetch(`http://localhost:3000/api/v1/visits?url=${url}`, {
     method: 'GET',
     headers: {
@@ -127,6 +128,7 @@ function logIn() {
         document.getElementById('loading').style.display = 'block';
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           let url = tabs[0].url;
+          console.log("je me login", url);
           retrieveVisitsRails(url, cookie.value);
         });
       }
