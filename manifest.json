@@ -26,10 +26,10 @@
 
   "host_permissions": ["https://api.websitecarbon.com/*", "http://localhost:3000/*", "*://*/*"],
 
-  "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"]
+  "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"],
 
-  // "chrome_url_overrides" : {
-  //   "newtab" : "index.html"
-  // }
+  "chrome_url_overrides": {
+    "newtab" : "index.html"
+  }
 
 }

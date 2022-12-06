@@ -75,7 +75,7 @@ function displayEmoji() {
       let bar = circle.querySelectorAll('.c-progress-circle__bar')[0];
 
       if (val === 0) {
-        emoji.src = loading;
+        emoji.src = "https://www.jimphicdesigns.com/downloads/imgs-mockup/blue-hourglass.gif";
       } else if (val < 30) {
         bar.style.stroke = "#d00000"
         //emoji bad

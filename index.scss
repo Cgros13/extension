@@ -1,0 +1,54 @@
+.animation {
+  width: 400px;
+  height: 400px;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 9%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+}
+
+html, body {
+  background: rgb(183,236,126);
+background: radial-gradient(circle at center top, rgba(183,236,126,1) 0%, rgba(148,214,133,1) 49%, rgba(117,210,121,1) 100%);
+  margin: 0px 8px;
+  font-family: 'Assistant', sans-serif;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.btn-ghost {
+  background-color: #499262;
+  color: #eeeeee;
+  box-shadow: 1px 1px 5px rgb(20 61 22 / 30%);
+  padding: 8px 24px;
+  border-radius: 35px;
+  font-size: 18px;
+  font-weight: lighter;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  width: 190px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: absolute;
+  top: 2%;
+  right: 1%;
+}
+
+
+.btn-ghost:hover {
+  opacity: 1;
+}
