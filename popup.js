@@ -20,6 +20,7 @@ const retrieveVisitsRails = (url, cookie) => {
 
       const stat = `<span>${(percentage)}%</span>`
       const stat2 = `<span>${100 - percentage} %</span>`
+      const stat3 = `<span>${data[last].bytes}</span>`
 
 
       if (percentage > 50) {
@@ -30,8 +31,14 @@ const retrieveVisitsRails = (url, cookie) => {
       }
       else {
         document.getElementById('loading').style.display = 'none';
+        response = document.getElementById('response')
+        response.style.cssText += 'color:red;';
+        background = document.querySelector('body')
+        background.style.cssText += 'background-color:eac3c3;';
+        background = document.querySelector('.container')
+        background.style.cssText += 'background-color:eac3c3;';
+        response.innerHTML = `Dirtier than ${stat2} of webpages`;
 
-        document.getElementById('response').innerHTML = `Dirtier than ${stat2} of webpages`;
         document.getElementById('circle').dataset.percentage = percentage;
       }
       displayEmoji();
