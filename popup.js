@@ -90,19 +90,19 @@ function displayEmoji() {
         document.getElementById('loading').style.display = 'flex';
 
       } else if (val < 30) { // bad
-        bar.style.stroke = "#d00000"
+        bar.style.stroke = "#9E2A2B"
         let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
         emoji.src = badEmojis[randomIndexBad];
       } else if (val < 60) { // moyen
-        bar.style.stroke = "#e3d400"
+        bar.style.stroke = "#A14F03"
         let randomIndexOk = Math.floor(Math.random() * okEmojis.length);
         emoji.src = okEmojis[randomIndexOk];
       } else if (val < 90) { // bon
-        bar.style.stroke = "#31c200"
+        bar.style.stroke = "#31572C"
         let randomIndexGood = Math.floor(Math.random() * goodEmojis.length);
         emoji.src = goodEmojis[randomIndexGood];
       } else { // perfect
-        bar.style.stroke = "#00ffee"
+        bar.style.stroke = "#31572C"
         emoji.src = perfect;
       }
 
