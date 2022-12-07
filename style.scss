@@ -33,10 +33,9 @@ body {
   font-size: 16px;
   line-height: 1.2;
   text-align: left;
-  margin: 24px 0px 0px 12px;
-  // gap: 4px;
-  // margin-top: 24px;
-  // align-items: center;
+  position: fixed;
+  top: 24px;
+  left: 80px;
 }
 
 img {
@@ -45,7 +44,7 @@ img {
   transform-origin: center;
   transform: rotate(90deg);
   top: 13px;
-  left: 9px;
+  left: 13px;
   width: 22px;
   height: 22px;
   animation: opacity 3s linear 1s forwards;
@@ -58,6 +57,7 @@ img {
   border-radius: 50%;
   position: relative;
   transform: rotate(271deg);
+  top: 12px;
 }
 .c-progress-circle__svg {
   width: 100%;
@@ -65,7 +65,6 @@ img {
 }
 
 circle {
-
   transition: stroke-dashoffset 1s linear;
   stroke-width: 4px;
   stroke-linecap: round;
@@ -121,15 +120,15 @@ circle {
 .loading-animation {
   // text-align: center;
   width: 25%;
-  top: 45px;
-  left: 10px;
+  top: 25px;
+  left: 5px;
   position: relative;
   height: fit-content;
 }
 
 .loading-text {
   margin-top: 8px;
-  margin-left: 24px;
+  margin-left: 70px;
   color: #31572C;
   text-align: left;
   font-size: 1.2em;
