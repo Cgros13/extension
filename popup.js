@@ -9,7 +9,7 @@ const retrieveVisitsRails = (url, cookie) => {
       'Content-Type': 'application/json',
       'X-User-Token': cookie,
     },
-    })
+  })
     .then(response => response.json())
     .then(data => {
       let last = 0
@@ -87,7 +87,7 @@ function displayEmoji() {
 
       if (val === 0) {
         document.querySelector(".response-popup-api").style.display = 'none';
-        document.getElementById('loading').style.display = 'inline-flex';
+        document.getElementById('loading').style.display = 'flex';
 
       } else if (val < 30) { // bad
         bar.style.stroke = "#d00000"
@@ -122,7 +122,7 @@ function displayEmoji() {
         bar.setAttribute('data-percentage', val);
       }
     }
-  }, 500);
+  }, 135);
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
