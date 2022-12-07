@@ -1,7 +1,7 @@
 const tabs = [];
 
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
-  if (tab.url?.startsWith("chrome://")) {
+  if (tab.url?.startsWith("chrome://") || tab.url?.startsWith("https://www.google.com/search?")) {
     return undefined;
   } else {
     if (ChangeInfo.status === 'complete') {
@@ -12,20 +12,21 @@ chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
 
       // if yes, update
       if (foundTab) {
-        console.log("lqlqlqlql")
+        sendEndTimeToRails(foundTab)
+        foundTab.url = tab.url
+        foundTab.visitId = undefined;
         // if no, add
-      } else {
-        sendVisitToRails(tab.url)
-        .then((tabData) => {
-          console.log(tabData);
-          const tabObject = {
-            tabId: tabId,
-            url: tab.url,
-            visitId: tabData.id,
-          };
-          tabs.push(tabObject);
-        })
       }
+      sendVisitToRails(tab.url)
+      .then((tabData) => {
+        console.log(tabData);
+        const tabObject = {
+          tabId: tabId,
+          url: tab.url,
+          visitId: tabData.id,
+        };
+        tabs.push(tabObject);
+      })
     }
   }
 });
@@ -40,32 +41,11 @@ chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
     });
     if (foundTab) {
       console.log("found");
-      return new Promise((resolve, reject) => {
-        chrome.cookies.get(
-          {url: "http://localhost:3000", name:'signed_id'},
-          function(cookie) {
-            if (cookie) {
-            fetch(`http://localhost:3000/api/v1/visits/${foundTab.visitId}`, {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-User-Token': cookie.value,
-              },
-              body: JSON.stringify({
-                visit: {
-                  end_time: Date.now(),
-                }
-              })
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              resolve(data);
-              console.log(end_time)
-            })
-          }
-        })
-      })
+      sendEndTimeToRails(foundTab);
+      const index = tabs.findIndex((tabItem) => {
+        return tabItem.tabId === tabId;
+      });
+      tabs.splice(index, 1);
     }
   }
 });
@@ -105,3 +85,32 @@ const sendVisitToRails = (url) => {
     )
   })
 }
+
+const sendEndTimeToRails = (tab) => {
+  return new Promise((resolve, reject) => {
+    chrome.cookies.get(
+      {url: "http://localhost:3000", name:'signed_id'},
+      function(cookie) {
+        if (cookie) {
+        fetch(`http://localhost:3000/api/v1/visits/${tab.visitId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-User-Token': cookie.value,
+          },
+          body: JSON.stringify({
+            visit: {
+              end_time: Date.now(),
+            }
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          resolve(data);
+          console.log(end_time)
+        })
+      }
+    })
+  })
+};
