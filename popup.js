@@ -24,21 +24,32 @@ const retrieveVisitsRails = (url, cookie) => {
       const stat3 = `<span>${data[last].bytes}</span>`
 
 
-      if (percentage > 50) {
+      if (percentage > 60) {
         document.getElementById('loading').style.display = 'none';
 
-        document.getElementById('response').innerHTML = `Cleaner than ${stat} of webpages`;
+        document.getElementById('response').innerHTML = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
+        document.getElementById('circle').dataset.percentage = percentage;
+      }
+      else if (percentage > 30 && percentage < 60) {
+        document.getElementById('loading').style.display = 'none';
+        response = document.getElementById('response')
+        response.innerHTML = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
+        response.style.cssText += 'color: #A14F03;';
+        background = document.querySelector('body')
+        background.style.cssText += 'background-color: F6DDB8;';
+        background = document.querySelector('.container')
+        background.style.cssText += 'background-color:F6DDB8;';
         document.getElementById('circle').dataset.percentage = percentage;
       }
       else {
         document.getElementById('loading').style.display = 'none';
         response = document.getElementById('response')
-        response.style.cssText += 'color:red;';
+        response.style.cssText += 'color: #9E2A2B;';
         background = document.querySelector('body')
         background.style.cssText += 'background-color:eac3c3;';
         background = document.querySelector('.container')
         background.style.cssText += 'background-color:eac3c3;';
-        response.innerHTML = `Dirtier than ${stat2} of webpages`;
+        response.innerHTML = `<strong>Dirtier</strong> than <strong>${stat2}</strong> of webpages`;
 
         document.getElementById('circle').dataset.percentage = percentage;
       }
@@ -62,8 +73,6 @@ badEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumb
 badEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/face-screaming-in-fear_1f631.png');
 badEmojis.push('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/thumbs-down_1f44e.png');
 
-let loading = "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/hourglass-not-done_23f3.png";
-
 let perfect = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/325/partying-face_1f973.png';
 
 let progressCircles = document.querySelectorAll('.c-progress-circle');
@@ -77,7 +86,9 @@ function displayEmoji() {
       let bar = circle.querySelectorAll('.c-progress-circle__bar')[0];
 
       if (val === 0) {
-         emoji.src = loading;
+        document.querySelector(".response-popup-api").style.display = 'none';
+        document.getElementById('loading').style.display = 'inline-flex';
+
       } else if (val < 30) { // bad
         bar.style.stroke = "#d00000"
         let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
@@ -125,12 +136,17 @@ function logIn() {
     chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
       if (cookie) {
         document.getElementById('login').style.display = 'none';
-        document.getElementById('loading').style.display = 'block';
+        document.getElementById('loading').style.display = 'inline-flex';
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           let url = tabs[0].url;
           console.log("je me login", url);
           retrieveVisitsRails(url, cookie.value);
         });
+      }
+      else {
+        document.querySelector(".response-popup-api").style.display = "none"
+        document.getElementById('login').style.display = 'block';
+        document.getElementById("loading").style.display = "none";
       }
     })
   }

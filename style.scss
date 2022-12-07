@@ -1,46 +1,47 @@
+html {
+  width: 260px;
+  height: 90px;
+}
 
 body {
   background: #CFE1B9;
   margin: 0px 8px;
   font-family: 'Assistant', sans-serif;
+  color: #31572C;
 }
 
 .container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   padding: 8px;
-  gap: 4px;
   isolation: isolate;
   width: 220px;
-  height: 60px;
-  background: #CFE1B9;
+  height: 70px;
   margin: 0;
+}
+
+// Pop-up response API
+.response-popup-api {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  align-items: center;
 }
 
 #response, #loading {
-  color: #31572C;
-  font-family: 'Assistant', sans-serif;
+  // justify-content: flex-start;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.2;
   text-align: center;
-  color: #31572C;
-  margin: 0;
+  margin: 8px 0px 0px 0px;
 }
-
-#loading {
-  font-size: 15px;
-}
-
 
 img {
   opacity: 0;
   position:absolute;
   transform-origin: center;
   transform: rotate(90deg);
-  top: 13px;
-  left: 13px;
+  top: 12px;
+  left: 12px;
   width: 22px;
   height: 22px;
   animation: opacity 3s linear 1s forwards;
@@ -58,6 +59,7 @@ img {
   width: 100%;
   height: 100%;
 }
+
 circle {
   stroke-dashoffset: 0;
   transition: stroke-dashoffset 1s linear;
@@ -70,9 +72,7 @@ circle {
   stroke-width: 1.6px;
   stroke-dashoffset: 125.66370614px;
   stroke-dasharray: 125.66370614px;
-  background-image: conic-gradient(from 270deg, #D00000 10%, #E46700 35%, #E3D400 50%, #31C200 75%, #00FFEE 95%);
 }
-
 
 @keyframes opacity {
   0% {
@@ -84,6 +84,97 @@ circle {
   }
 }
 
-#loading {
-  display: none;
+// Pop up response not logged in
+.notlogged {
+  color: #31572C;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  margin: 8px;
+}
+
+.login-btn {
+  border-radius: 8px;
+  background-color: #E9F5DB;
+  color: #31572C;
+  text-decoration: none;
+  padding: 4px 48px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+// Pop up loading
+.loading-content {
+  display: flex;
+  height: inherit;
+}
+
+.loading-animation {
+  text-align: center;
+  width: 25%;
+  top: 35px;
+  left: 10px;
+  position: relative;
+  height: fit-content;
+}
+
+.loading-text {
+  display: inline-flex;
+  margin-left: 8px;
+  color: #31572C;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+// Loading animation
+
+.spinner {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+}
+
+.bubble-1,
+.bubble-2 {
+  position: absolute;
+  top: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  background-color: #31572C;
+}
+
+.bubble-2 {
+  top: auto;
+  bottom: 0;
+}
+
+.load-9 .spinner {
+  animation: loadingI 2s linear infinite;
+}
+.load-9 .bubble-1,
+.load-9 .bubble-2 {
+  animation: bounce 2s ease-in-out infinite;
+}
+.load-9 .bubble-2 {
+  animation-delay: -1s;
+}
+
+@keyframes loadingI {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
 }
