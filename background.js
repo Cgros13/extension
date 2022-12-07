@@ -1,7 +1,7 @@
 const tabs = [];
 
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
-  if (tab.url?.startsWith("chrome://") || tab.url?.startsWith("https://www.google.com/search?")) {
+  if (tab.url?.startsWith("chrome://") || tab.url?.startsWith("https://www.google.com/search?") || tab.url?.startsWith("http://localhost") ) {
     return undefined;
   } else {
     if (ChangeInfo.status === 'complete') {

@@ -52,7 +52,12 @@ function logIn() {
   if (chrome.cookies) {
     chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
       if (cookie) {
-        container.innerHTML = loadingHtml;
+        setTimeout(() => {
+          console.log(!document.body.contains(document.getElementById('response-api')));
+          if (!document.body.contains(document.getElementById('response-api'))) {
+            container.innerHTML = loadingHtml;
+          }
+        }, 100);
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           let url = tabs[0].url;
           console.log("je me login", url);
@@ -77,52 +82,53 @@ const retrieveVisitsRails = (url, cookie) => {
       'X-User-Token': cookie,
     },
   })
-    .then(response => response.json())
-    .then(data => {
-      let last = 0
-      if (data.length > 0) {
-        last = data.length - 1
-      }
+  .then(response => response.json())
+  .then(data => {
+    let last = 0
+    if (data.length > 0) {
+      last = data.length - 1
+    }
 
-      var percentage = parseInt((data[last].cleaner_than * 100));
+    var percentage = parseInt((data[last].cleaner_than * 100));
 
-      const stat = `<span>${(percentage)}%</span>`
-      const stat2 = `<span>${100 - percentage} %</span>`
-
-      if (percentage > 60) {
-        // document.querySelector('.response-popup-api').style.display = 'flex';
-        var responseHtml = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
-        var backgroundColor = '#CEFE1B9;';
-      }
-      else if (percentage > 30 && percentage < 60) {
-        // document.querySelector('.response-popup-api').style.display = 'flex';
-        var responseHtml = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
-        var responseColor = '#A14F03';
-        var backgroundColor = '#F6DDB8;';
-      }
-      else {
-        // document.querySelector('.response-popup-api').style.display = 'flex';
-        var responseHtml = `<strong>Dirtier</strong> than <strong>${stat2}</strong> of webpages`;
-        var responseColor = '#9E2A2B';
-        var backgroundColor = '#eac3c3;';
-      }
-
-    if (percentage < 30) { // bad
-      var stroke = "#9E2A2B"
-      let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
-      var emojiSrc = badEmojis[randomIndexBad];
-    } else if (percentage < 60) { // moyen
-      var stroke = "#A14F03"
-      let randomIndexOk = Math.floor(Math.random() * okEmojis.length);
-      var emojiSrc = okEmojis[randomIndexOk];
-    } else if (percentage < 90) { // bon
+    const stat = `<span>${(percentage)}%</span>`
+    const stat2 = `<span>${100 - percentage} %</span>`
+    if (percentage > 90) {
+      console.log("perfect");
+      var responseHtml = `<strong>Wow !! Cleaner</strong> than <strong>${stat}</strong> of webpages`;
+      var stroke = "#31572C"
+      var emojiSrc = perfect;
+      var backgroundColor = '#CFE1B9;';
+    } else if (percentage > 60) {
+      console.log("good");
+      var responseHtml = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
       var stroke = "#31572C"
       let randomIndexGood = Math.floor(Math.random() * goodEmojis.length);
       var emojiSrc = goodEmojis[randomIndexGood];
-    } else { // perfect
-      var stroke = "#31572C"
-      var emojiSrc = perfect;
+      var backgroundColor = '#CFE1B9;';
     }
+    else if (percentage > 30) {
+      console.log("ok");
+      var responseHtml = `<strong>Cleaner</strong> than <strong>${stat}</strong> of webpages`;
+      var responseColor = '#A14F03';
+      var backgroundColor = '#F6DDB8;';
+      var stroke = "#A14F03"
+      let randomIndexOk = Math.floor(Math.random() * okEmojis.length);
+      var emojiSrc = okEmojis[randomIndexOk];
+    }
+    else {
+      console.log("bad");
+      var responseHtml = `<strong>Dirtier</strong> than <strong>${stat2}</strong> of webpages`;
+      var responseColor = '#9E2A2B';
+      var backgroundColor = '#eac3c3;';
+      var stroke = "#9E2A2B"
+      let randomIndexBad = Math.floor(Math.random() * badEmojis.length);
+      var emojiSrc = badEmojis[randomIndexBad];
+    }
+
+    console.log(backgroundColor);
+
+    body.style.cssText += `background-color: ${backgroundColor};`;
 
     if (isNaN(percentage)) {
       percentage = 100;
@@ -137,12 +143,9 @@ const retrieveVisitsRails = (url, cookie) => {
       var pct = ((100 - percentage) / 100) * c;
     }
 
-    console.log(backgroundColor);
-    body.style.cssText += `background-color: ${backgroundColor};`;
-    console.log(pct);
     const goodHtml =
     `
-    <div class="response-popup-api">
+    <div id="response-api" class="response-popup-api">
       <div class="c-progress-circle" id="circle" data-percentage="${percentage}">
         <img id="emoji" alt="emoji" src="${emojiSrc}">
         <svg class="c-progress-circle__svg">
@@ -162,7 +165,6 @@ const retrieveVisitsRails = (url, cookie) => {
       bar.setAttribute('data-percentage', percentage)
     }, 500);
   })
-
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {

@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background: #CFE1B9;
+  background: transparent;
   margin: 0px 8px;
   font-family: 'Assistant', sans-serif;
   color: #31572C;
@@ -47,7 +47,7 @@ img {
   left: 12px;
   width: 22px;
   height: 22px;
-  animation: opacity 3s linear 1s forwards;
+  animation: opacity 1s linear 0.3s forwards;
 }
 
 .c-progress-circle {
@@ -65,7 +65,7 @@ img {
 }
 
 circle {
-  transition: stroke-dashoffset 1s linear;
+  transition: stroke-dashoffset 0.5s linear;
   stroke-width: 4px;
   stroke-linecap: round;
 }
@@ -80,9 +80,8 @@ circle {
 @keyframes opacity {
   0% {
     opacity: 0;
-  } 50% {
-    opacity: 0.7;
-  } 100% {
+  }
+  100% {
     opacity: 1;
   }
 }
