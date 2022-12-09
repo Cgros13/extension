@@ -1,5 +1,5 @@
 const retrieveAllVisitsRails = (cookie) => {
-  fetch(`http://localhost:3000/api/v1/visits`, {
+  fetch(`https://www.c0-de.tech/api/v1/visits`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ const retrieveAllVisitsRails = (cookie) => {
     })
   }
 if (chrome.cookies) {
-  chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
+  chrome.cookies.get({url: "https://www.c0-de.tech", name:'signed_id'}, function(cookie) {
     if (cookie) {
       // we want to retrieve the url of the current tab
       retrieveAllVisitsRails(cookie.value);

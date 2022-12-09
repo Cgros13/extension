@@ -1,7 +1,7 @@
 const tabs = [];
 
 chrome.tabs.onUpdated.addListener(function(tabId, ChangeInfo, tab) {
-  if (tab.url?.startsWith("chrome://") || tab.url?.startsWith("https://www.google.com/search?") || tab.url?.startsWith("http://localhost") ) {
+  if (tab.url?.startsWith("chrome://") || tab.url?.startsWith("https://www.google.com/search?")) {
     return undefined;
   } else {
     if (ChangeInfo.status === 'complete') {
@@ -56,12 +56,12 @@ const sendVisitToRails = (url) => {
   return new Promise((resolve, reject) => {
     chrome.cookies.get(
       {
-        url: "http://localhost:3000",
+        url: "https://www.c0-de.tech/",
         name:'signed_id'
       },
       function(cookie) {
         if (cookie) {
-          fetch('http://localhost:3000/api/v1/visits', {
+          fetch('https://www.c0-de.tech/api/v1/visits', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -89,10 +89,10 @@ const sendVisitToRails = (url) => {
 const sendEndTimeToRails = (tab) => {
   return new Promise((resolve, reject) => {
     chrome.cookies.get(
-      {url: "http://localhost:3000", name:'signed_id'},
+      {url: "https://www.c0-de.tech", name:'signed_id'},
       function(cookie) {
         if (cookie) {
-        fetch(`http://localhost:3000/api/v1/visits/${tab.visitId}`, {
+        fetch(`https://www.c0-de.tech/api/v1/visits/${tab.visitId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
