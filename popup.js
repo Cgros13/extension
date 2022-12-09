@@ -25,7 +25,7 @@ const notLoginHtml =
   <div class="popup-text" id="response">
     <div class="notlogged" id="login">
       <h3>Sorry, you need to log in first</h3>
-      <a href="http://localhost:3000/users/sign_in" target="_blank" class="login-btn">Log in</a>
+      <a href="https://www.c0-de.tech/users/sign_in" target="_blank" class="login-btn">Log in</a>
     </div>
   </div>
 </div>
@@ -50,7 +50,7 @@ const loadingHtml =
 
 function logIn() {
   if (chrome.cookies) {
-    chrome.cookies.get({url: "http://localhost:3000", name:'signed_id'}, function(cookie) {
+    chrome.cookies.get({url: "https://www.c0-de.tech", name:'signed_id'}, function(cookie) {
       if (cookie) {
         setTimeout(() => {
           console.log(!document.body.contains(document.getElementById('response-api')));
@@ -75,7 +75,7 @@ logIn();
 
 const retrieveVisitsRails = (url, cookie) => {
   console.log("retrieveVisitsRails", url);
-  fetch(`http://localhost:3000/api/v1/visits?url=${url}`, {
+  fetch(`https://www.c0-de.tech/api/v1/visits?url=${url}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

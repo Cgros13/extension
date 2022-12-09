@@ -24,7 +24,7 @@
     }
   ],
 
-  "host_permissions": ["https://api.websitecarbon.com/*", "http://localhost:3000/*", "*://*/*"],
+  "host_permissions": ["https://api.websitecarbon.com/*", "https://www.c0-de.tech/*", "*://*/*"],
 
   "permissions": ["storage", "tabs", "activeTab", "cookies", "scripting"],
 
