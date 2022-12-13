@@ -15,14 +15,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, ChangeInfo, tab) {
       const foundTab = tabs.find((tabItem) => {
         return tabItem.tabId === tabId;
       });
-
       // if yes, update
       if (foundTab) {
         sendEndTimeToRails(foundTab);
         foundTab.url = tab.url;
         foundTab.visitId = undefined;
-        // if no, add
       }
+      // if no, add
       sendVisitToRails(tab.url).then((tabData) => {
         console.log(tabData);
         const tabObject = {
@@ -80,9 +79,7 @@ const sendVisitToRails = (url) => {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("je send le message avant runtime");
               chrome.runtime.sendMessage({ message: "update", data: data });
-              console.log("je send le message apres runtime");
               resolve(data);
             });
         }
